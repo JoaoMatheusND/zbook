@@ -38,6 +38,30 @@
 		pwm-mosfet = &pwm_mosfet;
 	};
 
+	/*
+	 * LittleFS auto-mounted on the `storage` flash partition at /lfs, used by
+	 * the settings FILE backend (CONFIG_SETTINGS_FILE) to persist Wi-Fi
+	 * credentials to a file instead of NVS. The node is inert unless
+	 * CONFIG_FILE_SYSTEM_LITTLEFS=y, so non-LittleFS builds are unaffected.
+	 * Geometry matches the RP2350 flash (write-block-size 1, erase-block 4 KB):
+	 * cache-size divides the 4 KB erase block; read/prog-size divide cache-size.
+	 */
+	fstab {
+		compatible = "zephyr,fstab";
+
+		lfs_storage: lfs_storage {
+			compatible = "zephyr,fstab,littlefs";
+			mount-point = "/lfs";
+			partition = <&storage_partition>;
+			automount;
+			read-size = <16>;
+			prog-size = <16>;
+			cache-size = <64>;
+			lookahead-size = <32>;
+			block-cycles = <512>;
+		};
+	};
+
 	leds {
 		compatible = "gpio-leds";
 

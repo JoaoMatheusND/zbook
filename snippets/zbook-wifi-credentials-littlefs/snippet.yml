@@ -1,0 +1,3 @@
+name: zbook-wifi-credentials-littlefs
+append:
+  EXTRA_CONF_FILE: zbook-wifi-credentials-littlefs.conf
