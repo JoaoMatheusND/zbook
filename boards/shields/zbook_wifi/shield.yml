@@ -1,0 +1,6 @@
+shields:
+  - name: zbook_wifi
+    full_name: ZBook ESP8266 Wi-Fi Module
+    vendor: edge
+    supported_features:
+      - wifi

@@ -1,0 +1,74 @@
+# Copyright (c) 2026 Centro de Inovacao EDGE
+# SPDX-License-Identifier: Apache-2.0
+#
+# Networking stack pulled in only when the zbook_wifi shield is attached, so the
+# base build stays networking-free. WIFI_ESP_AT itself auto-enables from the
+# esp8266 devicetree node in zbook_wifi.overlay.
+#
+# Persistent Wi-Fi credentials are intentionally NOT here: compose the upstream
+# snippet for that, e.g. `--shield zbook_wifi -S wifi-credentials`.
+
+if SHIELD_ZBOOK_WIFI
+
+# --- Core networking + Wi-Fi ---
+configdefault NETWORKING
+	default y
+
+configdefault WIFI
+	default y
+
+configdefault WIFI_OFFLOAD
+	default y
+
+configdefault NET_L2_WIFI_MGMT
+	default y
+
+configdefault NET_L2_WIFI_SHELL
+	default y
+
+configdefault NET_CONNECTION_MANAGER
+	default y
+
+configdefault NET_IPV4
+	default y
+
+configdefault NET_TCP
+	default y
+
+configdefault NET_UDP
+	default y
+
+configdefault NET_SOCKETS
+	default y
+
+configdefault DNS_RESOLVER
+	default y
+
+configdefault NET_SHELL
+	default y
+
+configdefault NET_LOG
+	default y
+
+configdefault NET_IF_MAX_IPV4_COUNT
+	default 2
+
+configdefault NET_TX_STACK_SIZE
+	default 2048
+
+configdefault NET_RX_STACK_SIZE
+	default 2048
+
+# --- ESP-AT modem ---
+configdefault WIFI_ESP_AT_FETCH_VERSION
+	default y
+
+configdefault WIFI_ESP_AT_RESET_TIMEOUT
+	default 5000
+
+choice WIFI_ESP_AT_VERSION
+	default WIFI_ESP_AT_VERSION_1_7
+	depends on WIFI_ESP_AT
+endchoice
+
+endif # SHIELD_ZBOOK_WIFI

@@ -1,0 +1,83 @@
+/**
+* @file zbook-pinctrl.dtsi
+* @author Gabriel Germano (gabriel.germano@edge.ufal.br)
+* @brief Pin Controller para configuração da UART/SPI.
+* @version 0.1
+* @date 10-12-2025
+*
+* @copyright Copyright (c) 2025
+*
+*/
+
+#include <zephyr/dt-bindings/pinctrl/rpi-pico-rp2350b-pinctrl.h>
+
+&pinctrl {
+	uart0_default: uart0_default {
+		group1 {
+			pinmux = <UART0_TX_P28>;
+		};
+		
+		group2 {
+			pinmux = <UART0_RX_P29>;
+			input-enable;
+		};
+	};
+	
+	uart1_default: uart1_default {
+		group1 {
+			pinmux = <UART1_TX_P20>;
+		};
+		
+		group2 {
+			pinmux = <UART1_RX_P21>;
+			input-enable;
+		};
+	};
+	
+	spi0_default: spi0_default {
+		group1 {
+			pinmux = <SPI0_SCK_P34>, <SPI0_TX_P35>;
+		};
+		group2 {
+			pinmux = <SPI0_RX_P36>;
+			input-enable;
+		};
+	};
+	
+	spi1_default: spi1_default {
+		group1 {
+			pinmux = <SPI1_SCK_P14>, <SPI1_TX_P15>;
+		};
+		group2 {
+			pinmux = <SPI1_RX_P12>;
+			input-enable;
+		};
+	};
+	
+	i2c0_default: i2c0_default {
+		group1 {
+			pinmux = <I2C0_SDA_P4>, <I2C0_SCL_P5>;
+			input-enable;
+			input-schmitt-enable;
+		};
+	};
+	
+	adc_default: adc_default {
+		group1 {
+			pinmux = <ADC_CH0_P40>, <ADC_CH2_P42>, <ADC_CH3_P43>;
+			input-enable;
+		};
+	};
+
+	pwm_default: pwm_default {
+		group1 {
+			pinmux = <PWM_7B_P31>, <PWM_8A_P32>;
+		};
+	};
+	
+	pio1_ws2812_default: pio1_ws2812_default {
+		group1 {
+			pinmux = <PIO1_P6>;
+		};
+	};
+}; 

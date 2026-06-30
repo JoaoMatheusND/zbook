@@ -1,0 +1,14 @@
+identifier: zbook/rp2350b/m33
+name: Zbook (Cortex-M33)
+type: mcu
+arch: arm
+flash: 2048
+ram: 512
+toolchain:
+  - zephyr
+supported:
+  - adc
+  - gpio
+  - i2c
+  - spi
+  - uart

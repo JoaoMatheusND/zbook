@@ -1,0 +1,22 @@
+/**
+* @file zbook_rp2350b_m33_mcuboot.dts
+* @brief Device Tree Source for the Zbook board, MCUboot variant.
+*        Reuses the shared hardware description and the upstream RP2350 2 MB
+*        sysbuild partition table (second_stage_bootloader / mcuboot / slot0 /
+*        slot1 / storage). The application links into slot-0; MCUboot is built
+*        alongside via sysbuild.
+*
+* @copyright Copyright (c) Centro de Inovação EDGE
+*/
+
+/dts-v1/;
+#include <raspberrypi/rpi_pico/rp2350b.dtsi>
+#include <raspberrypi/rpi_pico/m33.dtsi>
+#include "zbook_rp2350b_m33-common.dtsi"
+#include <raspberrypi/partitions_2M_sysbuild.dtsi>
+
+/ {
+	chosen {
+		zephyr,code-partition = &slot0_partition;
+	};
+};

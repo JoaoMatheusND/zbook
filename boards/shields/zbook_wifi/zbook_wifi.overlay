@@ -1,0 +1,20 @@
+/*
+ * Copyright (c) 2026 Centro de Inovacao EDGE
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * ZBook ESP8266 Wi-Fi module (attachable), driven over uart1 via ESP-AT.
+ * Moved out of the base board DTS so Wi-Fi is opt-in via `--shield zbook_wifi`.
+ */
+
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+&uart1 {
+	status = "okay";
+
+	esp8266: esp8266 {
+		compatible = "espressif,esp-at";
+		reset-gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
+		power-gpios = <&gpio0 19 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
+};

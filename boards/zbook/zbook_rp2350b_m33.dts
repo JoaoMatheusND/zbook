@@ -1,0 +1,52 @@
+/**
+* @file zbook_rp2350b_m33.dts
+* @author Gabriel Germano (gabriel.germano@edge.ufal.br)
+* @brief Device Tree Source for the Zbook board (standalone, no bootloader).
+* @version 0.1
+* @date 10-12-2025
+*
+* @copyright Copyright (c) Centro de Inovação EDGE
+*
+*/
+
+/dts-v1/;
+#include <raspberrypi/rpi_pico/rp2350b.dtsi>
+#include <raspberrypi/rpi_pico/m33.dtsi>
+#include "zbook_rp2350b_m33-common.dtsi"
+
+/ {
+	chosen {
+		zephyr,code-partition = &code_partition;
+	};
+};
+
+&flash0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		image_def: partition@0 {
+			label = "image_def";
+			reg = <0x00000000 0x100>;
+			read-only;
+		};
+
+		/*
+		 * Standalone layout: the app boots directly (its IMAGE_DEF sits near
+		 * the start of flash). For the MCUboot layout build the
+		 * zbook/rp2350b/m33/mcuboot variant instead.
+		 */
+		code_partition: partition@100 {
+			label = "code-partition";
+			reg = <0x100 (DT_SIZE_M(2) - 0x100 - DT_SIZE_K(256))>;
+			read-only;
+		};
+
+		/* Last 256 KB: NVS-backed settings storage (Wi-Fi credentials). */
+		storage_partition: partition@1c0000 {
+			label = "storage";
+			reg = <(DT_SIZE_M(2) - DT_SIZE_K(256)) DT_SIZE_K(256)>;
+		};
+	};
+};

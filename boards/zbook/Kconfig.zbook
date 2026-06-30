@@ -1,0 +1,6 @@
+config BOARD_ZBOOK
+    bool
+	select SOC_RP2350B_M33
+
+config SOC
+	default "rp2350b"
