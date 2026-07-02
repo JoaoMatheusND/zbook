@@ -3,6 +3,10 @@
 Out-of-tree board support for the **ZBook** (Raspberry Pi **RP2350B**,
 Cortex-**M33**), packaged as a [Zephyr module](https://docs.zephyrproject.org/latest/develop/modules.html).
 
+<p align="center">
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/ff653269-7267-4117-9a28-a77d24d0403e" />
+</p>
+
 ## Contents
 
 ```
