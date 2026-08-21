@@ -1,0 +1,3 @@
+"lua":"/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/modules/lua_zephyr":"/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/modules/lua_zephyr"
+"cmsis_6":"/home/joaomatheusnd/repo/ufal/zbook_workspace/modules/hal/cmsis_6":"${ZEPHYR_CMSIS_6_CMAKE_DIR}"
+"hal_rpi_pico":"/home/joaomatheusnd/repo/ufal/zbook_workspace/modules/hal/rpi_pico":"${ZEPHYR_HAL_RPI_PICO_CMAKE_DIR}"

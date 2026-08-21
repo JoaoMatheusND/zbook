@@ -1,0 +1,17 @@
+config UART_SAMPLE_LUA_THREAD_STACK_SIZE
+    int "uart_sample Lua thread stack size"
+    default LUA_THREAD_STACK_SIZE
+    help
+      Stack size for the uart_sample Lua thread.
+
+config UART_SAMPLE_LUA_THREAD_HEAP_SIZE
+    int "uart_sample Lua thread heap size"
+    default LUA_THREAD_HEAP_SIZE
+    help
+      Heap size for the uart_sample Lua thread.
+
+config UART_SAMPLE_LUA_THREAD_PRIORITY
+    int "uart_sample Lua thread priority"
+    default LUA_THREAD_PRIORITY
+    help
+      Priority for the uart_sample Lua thread.

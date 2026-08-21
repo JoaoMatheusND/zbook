@@ -1,0 +1,2 @@
+# Load Zephyr board defconfig descriptions.
+osource "/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/boards/zbook/Kconfig.defconfig"

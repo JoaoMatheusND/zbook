@@ -1,0 +1,50 @@
+cmake:
+  application:
+    configuration-dir: '/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/samples/wrapper/lua/uart/hello_world'
+    source-dir: '/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/samples/wrapper/lua/uart/hello_world'
+  board:
+    name: 'zbook'
+    path:
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/boards/zbook'
+    qualifiers: 'rp2350b/m33'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/bindings'
+    files:
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/boards/zbook/zbook_rp2350b_m33.dts'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/samples/wrapper/lua/uart/hello_world/boards/zbook_rp2350b_m33.overlay'
+    include-dirs:
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/include'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/include/zephyr'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/common'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/vendor'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/rx'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/x86'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/xtensa'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/sparc'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/riscv'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/posix'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/arm64'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/arm'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts/arc'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr/dts'
+    user-files:
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/samples/wrapper/lua/uart/hello_world/boards/zbook_rp2350b_m33.overlay'
+  kconfig:
+    files:
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/boards/zbook/zbook_rp2350b_m33_defconfig'
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/samples/wrapper/lua/uart/hello_world/prj.conf'
+    user-files:
+     - '/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/samples/wrapper/lua/uart/hello_world/prj.conf'
+  toolchain:
+    name: 'zephyr'
+    path: '/home/joaomatheusnd/zephyr-sdk-1.0.1'
+  zephyr:
+    version: '4.4.0'
+    zephyr-base: '/home/joaomatheusnd/repo/ufal/zbook_workspace/zephyr'
+version: '0.1.0'
+west:
+  command: '/home/joaomatheusnd/zephyrproject/.venv/bin/west build -b zbook/rp2350b/m33 -p always hello_world/'
+  topdir: '/home/joaomatheusnd/repo/ufal/zbook_workspace'
+  version: '1.4.0'

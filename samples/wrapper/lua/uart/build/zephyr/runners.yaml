@@ -1,0 +1,37 @@
+# Available runners configured by board.cmake.
+runners:
+- openocd
+
+# Default flash runner if --runner is not given.
+flash-runner: openocd
+
+# Default debug runner if --runner is not given.
+debug-runner: openocd
+
+# Common runner configuration values.
+config:
+  board_dir: /home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/boards/zbook
+  # Build outputs:
+  elf_file: zephyr.elf
+  hex_file: zephyr.hex
+  bin_file: zephyr.bin
+  uf2_file: zephyr.uf2
+  # Host tools:
+  gdb: /home/joaomatheusnd/zephyr-sdk-1.0.1/gnu/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb-py
+  openocd: /home/joaomatheusnd/zephyr-sdk-1.0.1/hosttools/sysroots/x86_64-pokysdk-linux/usr/bin/openocd
+  openocd_search:
+    - /home/joaomatheusnd/zephyr-sdk-1.0.1/hosttools/sysroots/x86_64-pokysdk-linux/usr/share/openocd/scripts
+
+# Runner specific arguments
+args:
+  openocd:
+    - --cmd-load
+    - flash write_image erase
+    - --cmd-verify
+    - verify_image
+    - --cmd-pre-init
+    - source [find interface/cmsis-dap.cfg]
+    - --cmd-pre-init
+    - source [find target/rp2350.cfg]
+    - --cmd-pre-init
+    - adapter speed 4000

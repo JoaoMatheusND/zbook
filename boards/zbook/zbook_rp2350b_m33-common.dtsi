@@ -36,6 +36,7 @@
 		led-strip = &ws2812;
 		pwm-buzzer = &pwm_buzzer;
 		pwm-mosfet = &pwm_mosfet;
+		zbook-uart = &uart1;
 	};
 
 	/*
