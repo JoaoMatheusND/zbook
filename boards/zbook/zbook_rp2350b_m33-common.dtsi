@@ -113,6 +113,18 @@
 		full-ohms = <285000>;
 	};
 
+	/*
+	 * Raw ADC access for the LDR (channel 2) and the free channel 3, with
+	 * no dedicated consumer/sensor binding — the standard Zephyr pattern
+	 * for "just give me the raw channel" (see samples/drivers/adc/adc_dt).
+	 * Channel 0 (potentiometer, shared with `microphone` above) is read
+	 * via the microphone node's own io-channels instead of duplicating it
+	 * here, since it's the same physical channel.
+	 */
+	zephyr,user {
+		io-channels = <&adc 2>, <&adc 3>;
+	};
+
 	pico_header: connector {
 		compatible = "raspberrypi,pico-header";
 		#gpio-cells = <2>;

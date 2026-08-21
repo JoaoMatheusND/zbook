@@ -59,6 +59,7 @@
 			pinmux = <I2C0_SDA_P4>, <I2C0_SCL_P5>;
 			input-enable;
 			input-schmitt-enable;
+			bias-pull-up;
 		};
 	};
 	

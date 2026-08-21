@@ -1,0 +1,26 @@
+manifest:
+  version: "0.13"
+
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+    - name: rodrigopex
+      url-base: https://github.com/rodrigopex
+
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: v4.4.0
+      west-commands: scripts/west-commands.yml
+      import:
+        name-allowlist:
+          - hal_rpi_pico
+          - picolib
+          - cmsis_6
+
+    - name: lua_zephyr
+      remote: rodrigopex
+      revision: main
+      submodules: true
+      path: zephyr/modules/lua_zephyr
