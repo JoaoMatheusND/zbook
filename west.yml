@@ -18,6 +18,7 @@ manifest:
           - hal_rpi_pico
           - picolib
           - cmsis_6
+          - fatfs
 
     - name: lua_zephyr
       remote: rodrigopex
