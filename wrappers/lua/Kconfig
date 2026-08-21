@@ -4,3 +4,17 @@ config LUA_ZBOOK_SPI
 	depends on ZBOOK_SPI && LUA
 	help
 	  Expose zbook.protocols.spi (init/write/read) to Lua scripts.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (c) Centro de Inovacao EDGE
+
+menu "ZBook language wrappers"
+	depends on LUA
+
+config ZBOOK_LUA_UART
+	bool "Lua binding for zbook_uart"
+	default y
+	help
+	  Expose zbook_uart_* to Lua scripts as zbook.protocols.uart.
+
+endmenu
