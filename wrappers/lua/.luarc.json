@@ -1,0 +1,3 @@
+{
+  "workspace.library": ["sdk", "../../../zephyr/modules/lua_zephyr/src"]
+}
