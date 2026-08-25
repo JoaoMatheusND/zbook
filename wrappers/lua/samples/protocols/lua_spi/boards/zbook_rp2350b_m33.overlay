@@ -1,0 +1,10 @@
+/*
+ * This sample exercises SPI1 (zbook_spi) directly on GPIO12/14/15.
+ * The display's bit-banged SPI bus (spibb0) shares those same GPIOs
+ * (clk-gpios=14, mosi-gpios=15) in the shared board dtsi, so disable it
+ * here to avoid the two drivers fighting over the same pins.
+ */
+
+&spibb0 {
+	status = "disabled";
+};
