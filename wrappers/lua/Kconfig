@@ -1,0 +1,5 @@
+config ZBOOK_LUA_SPI
+	bool "ZBook Lua binding for SPI"
+	depends on ZBOOK_SPI && LUA
+	help
+	  Expose zbook.protocols.spi (init/write/read) to Lua scripts.

@@ -5,3 +5,6 @@ endmenu
 module = MAIN
 module-str = main
 source "subsys/logging/Kconfig.template.log_config"
+
+rsource "interface/Kconfig"
+rsource "wrappers/lua/Kconfig"
