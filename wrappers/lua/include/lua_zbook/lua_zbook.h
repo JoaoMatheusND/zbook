@@ -1,10 +1,17 @@
-/**
- * @file luaz_zbook.h
+/*******************************************************************
+ * @file lua_zbook.h
+ *
  * @brief Aggregates the enabled zbook Lua bindings into a single `zbook` table.
- */
+ * @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
+ * @version 0.1
+ * @date 21/08/2026
+ *
+ * @copyright Copyright (c) 2026
+ *
+ *******************************************************************/
 
-#ifndef _LUAZ_ZBOOK_H
-#define _LUAZ_ZBOOK_H
+#ifndef _LUA_ZBOOK_H
+#define _LUA_ZBOOK_H
 
 #include <lua.h>
 
@@ -16,4 +23,4 @@
  */
 int luaopen_zbook(lua_State *L);
 
-#endif /* _LUAZ_ZBOOK_H */
+#endif /* _LUA_ZBOOK_H */

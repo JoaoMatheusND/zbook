@@ -1,13 +1,17 @@
-/**
- * @file luaz_zbook_uart.h
- * @brief Lua binding for the zbook UART protocol interface.
+ /*******************************************************************
+ * @file lua_zbook_uart.h
  *
- * Exposes zbook_uart_* as a `uart` Lua library: init(), write(), read(), cfg(),
- * on_rx().
- */
+ * @brief Lua binding for the zbook UART protocol interface.
+ * @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
+ * @version 0.1
+ * @date 21/08/2026
+ *
+ * @copyright Copyright (c) 2026
+ *
+ *******************************************************************/
 
-#ifndef _LUAZ_ZBOOK_UART_H
-#define _LUAZ_ZBOOK_UART_H
+#ifndef _LUA_ZBOOK_UART_H
+#define _LUA_ZBOOK_UART_H
 
 #include <lua.h>
 
@@ -19,4 +23,4 @@
  */
 int luaopen_zbook_uart(lua_State *L);
 
-#endif /* _LUAZ_ZBOOK_UART_H */
+#endif /* _LUA_ZBOOK_UART_H */

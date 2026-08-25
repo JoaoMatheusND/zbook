@@ -1,8 +1,14 @@
-/**
+ /*******************************************************************
  * @file setup.c
- * @brief Preloads the `zbook` Lua library for the uart_sample thread.
- */
-
+ *
+ * @brief Initializes the `zbook` Lua library for the uart_sample thread.
+ * @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
+ * @version 0.1
+ * @date 21/08/2026
+ *
+ * @copyright Copyright (c) 2026
+ *
+ *******************************************************************/
 #include <lauxlib.h>
 #include <lua.h>
 #include <lua_zbook/lua_zbook.h>
