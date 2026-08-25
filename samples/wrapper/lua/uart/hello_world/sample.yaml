@@ -1,0 +1,15 @@
+sample:
+  name: UART Lua wrapper
+tests:
+  sample.zbook.wrapper.lua.uart:
+    harness: console
+    harness_config:
+      type: multi_line
+      ordered: true
+      regex:
+        - "uart.cfg  err=0"
+        - "uart.init err=0"
+        - "uart.write err=0"
+    tags: zbook lua uart
+    platform_allow:
+      - zbook/rp2350b/m33
