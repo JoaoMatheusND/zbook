@@ -1,4 +1,4 @@
-config ZBOOK_LUA_SPI
+config LUA_ZBOOK_SPI
 	bool "ZBook Lua binding for SPI"
 	default y
 	depends on ZBOOK_SPI && LUA

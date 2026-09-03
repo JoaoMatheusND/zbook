@@ -1,27 +1,68 @@
-/**
+/*******************************************************************
  * @file zbook_spi.c
- * @brief Pure C passthrough interface for the zbook generic SPI bus.
- * @author José Félix de O. Neto <josefelix.neto@edge.ufal.br>
- */
+ *
+ * @brief Implements the interface for the zbook SPI bus.
+ * @author José Félix de Oliveira Neto (josefelix.neto@edge.ufal.br)
+ * @version 0.1
+ * @date 25/08/26
+ *
+ * @copyright Copyright (c) 2026
+ *
+ *******************************************************************/
 
 #include "protocols/zbook_spi.h"
 
 #ifdef CONFIG_ZBOOK_SPI
 
 #include <errno.h>
+
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/spi.h>
 
 #define ZBOOK_SPI_NODE DT_NODELABEL(zbook_spi)
 #define ZBOOK_SPI_OP   (SPI_WORD_SET(8) | SPI_TRANSFER_MSB | SPI_OP_MODE_MASTER)
 
-static const struct spi_dt_spec zbook_spi_dev = SPI_DT_SPEC_GET(ZBOOK_SPI_NODE, ZBOOK_SPI_OP);
+static struct spi_dt_spec zbook_spi_dev = SPI_DT_SPEC_GET(ZBOOK_SPI_NODE, ZBOOK_SPI_OP);
 
 int zbook_spi_init(void)
 {
 	if (!spi_is_ready_dt(&zbook_spi_dev)) {
 		return -ENODEV;
 	}
+
+	return 0;
+}
+
+int zbook_spi_configure(const struct zbook_spi_cfg *cfg)
+{
+	if (cfg == NULL || cfg->word_size == 0 || cfg->word_size > 32) {
+		return -EINVAL;
+	}
+
+	uint32_t operation = SPI_WORD_SET(cfg->word_size) | SPI_OP_MODE_MASTER;
+
+	switch (cfg->mode) {
+	case ZBOOK_SPI_MODE_0:
+		break;
+	case ZBOOK_SPI_MODE_1:
+		operation |= SPI_MODE_CPHA;
+		break;
+	case ZBOOK_SPI_MODE_2:
+		operation |= SPI_MODE_CPOL;
+		break;
+	case ZBOOK_SPI_MODE_3:
+		operation |= SPI_MODE_CPOL | SPI_MODE_CPHA;
+		break;
+	default:
+		return -EINVAL;
+	}
+
+	if (cfg->bit_order == ZBOOK_SPI_LSB_FIRST) {
+		operation |= SPI_TRANSFER_LSB;
+	}
+
+	zbook_spi_dev.config.frequency = cfg->frequency;
+	zbook_spi_dev.config.operation = operation;
 
 	return 0;
 }

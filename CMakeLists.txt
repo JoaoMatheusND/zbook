@@ -15,7 +15,5 @@ target_sources(app PRIVATE ${ZBOOK_INTERFACE_SOURCES})
 target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/interface/includes)
 
 if(CONFIG_LUA)
-    file(GLOB_RECURSE ZBOOK_LUA_WRAPPER_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/wrappers/lua/src/*.c)
-    target_sources(app PRIVATE ${ZBOOK_LUA_WRAPPER_SOURCES})
-    target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/wrappers/lua/include)
+    add_subdirectory(wrappers/lua)
 endif()

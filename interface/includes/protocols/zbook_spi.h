@@ -1,9 +1,14 @@
-/**
+/*******************************************************************
  * @file zbook_spi.h
- * @brief Pure C passthrough interface for the zbook generic SPI bus.
- * @author José Félix de O. Neto <josefelix.neto@edge.ufal.br>
  *
- */
+ * @brief Defines the interface for the zbook SPI bus.
+ * @author José Félix de Oliveira Neto (josefelix.neto@edge.ufal.br)
+ * @version 0.1
+ * @date 25/08/26
+ *
+ * @copyright Copyright (c) 2026
+ *
+ *******************************************************************/
 
 #ifndef ZBOOK_SPI_H
 #define ZBOOK_SPI_H
@@ -11,12 +16,42 @@
 #include <stddef.h>
 #include <stdint.h>
 
+/** @brief SPI clock polarity/phase combination (standard SPI modes 0-3). */
+enum zbook_spi_mode {
+	ZBOOK_SPI_MODE_0 = 0, /**< CPOL=0, CPHA=0 */
+	ZBOOK_SPI_MODE_1,     /**< CPOL=0, CPHA=1 */
+	ZBOOK_SPI_MODE_2,     /**< CPOL=1, CPHA=0 */
+	ZBOOK_SPI_MODE_3,     /**< CPOL=1, CPHA=1 */
+};
+
+/** @brief Bit order used to shift each word over the wire. */
+enum zbook_spi_bit_order {
+	ZBOOK_SPI_MSB_FIRST = 0,
+	ZBOOK_SPI_LSB_FIRST,
+};
+
+/** @brief Runtime-configurable zbook SPI bus parameters. */
+struct zbook_spi_cfg {
+	uint32_t frequency;                 /**< Clock frequency in Hz. */
+	enum zbook_spi_mode mode;           /**< CPOL/CPHA combination. */
+	enum zbook_spi_bit_order bit_order; /**< MSB or LSB first. */
+	uint8_t word_size;                  /**< Bits per word (e.g. 8). */
+};
+
 /**
  * @brief Check that the zbook SPI bus is ready to use.
  *
  * @return 0 on success, -errno on error.
  */
 int zbook_spi_init(void);
+
+/**
+ * @brief Reconfigure the zbook SPI bus (frequency, mode, bit order, word size).
+ *
+ * @param cfg Desired configuration. All fields are required.
+ * @return 0 on success, -errno on error.
+ */
+int zbook_spi_configure(const struct zbook_spi_cfg *cfg);
 
 /**
  * @brief Exchange @p len bytes over the zbook SPI bus in a single transaction

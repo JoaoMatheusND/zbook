@@ -1,0 +1,3 @@
+file(GLOB_RECURSE ZBOOK_LUA_WRAPPER_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
+target_sources(app PRIVATE ${ZBOOK_LUA_WRAPPER_SOURCES})
+target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
