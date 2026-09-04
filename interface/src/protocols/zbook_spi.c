@@ -35,7 +35,14 @@ int zbook_spi_init(void)
 
 int zbook_spi_configure(const struct zbook_spi_cfg *cfg)
 {
-	if (cfg == NULL || cfg->word_size == 0 || cfg->word_size > 32) {
+	if (!spi_is_ready_dt(&zbook_spi_dev)) {
+		return -ENODEV;
+	}
+
+	/* Note: The current SPI driver in Zephyr (for this board) does not support word sizes other
+	 * than 8 bits. The following code is a placeholder for future support of different word
+	 * sizes. */
+	if (cfg == NULL || cfg->word_size == 0 || cfg->word_size > 63) {
 		return -EINVAL;
 	}
 
@@ -69,6 +76,10 @@ int zbook_spi_configure(const struct zbook_spi_cfg *cfg)
 
 int zbook_spi_transceive(const uint8_t *tx, uint8_t *rx, size_t len)
 {
+	if (!spi_is_ready_dt(&zbook_spi_dev)) {
+		return -ENODEV;
+	}
+
 	if ((tx == NULL && rx == NULL) || len == 0) {
 		return -EINVAL;
 	}

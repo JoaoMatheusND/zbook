@@ -64,8 +64,14 @@ static int l_spi_configure(lua_State *L)
 	lua_pop(L, 1);
 
 	lua_getfield(L, 1, "word_size");
-	cfg.word_size = (uint8_t)luaL_checkinteger(L, -1);
+	lua_Integer word_size = luaL_checkinteger(L, -1);
 	lua_pop(L, 1);
+
+	if (word_size <= 0 || word_size > 63) {
+		return luaL_error(L, "word_size must be between 1 and 63");
+	}
+
+	cfg.word_size = (uint8_t)word_size;
 
 	int err = zbook_spi_configure(&cfg);
 
