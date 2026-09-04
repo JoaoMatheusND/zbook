@@ -36,6 +36,8 @@
 		led-strip = &ws2812;
 		pwm-buzzer = &pwm_buzzer;
 		pwm-mosfet = &pwm_mosfet;
+		zbook-uart = &uart1;
+		zbook-pio = &pio0;
 	};
 
 	/*
@@ -308,6 +310,11 @@
 		zephyr,acquisition-time = <0>;
 		zephyr,resolution = <12>;
 	};
+};
+
+&pio0 {
+	/* Free for runtime PIO consumers (e.g. zbook_uart_register_pin()). */
+	status = "okay";
 };
 
 &pio1 {

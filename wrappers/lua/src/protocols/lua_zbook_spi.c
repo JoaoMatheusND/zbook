@@ -12,10 +12,9 @@
 
 #include "protocols/lua_zbook_spi.h"
 
-#ifdef CONFIG_LUA_ZBOOK_SPI
-
 #include <lauxlib.h>
 #include <protocols/zbook_spi.h>
+#include <zbook_lua_protocol.h>
 
 #define ZBOOK_LUA_SPI_MAX_LEN 256
 /*
@@ -181,4 +180,4 @@ int luaopen_zbook_spi(lua_State *L)
 	return 1;
 }
 
-#endif /* CONFIG_LUA_ZBOOK_SPI */
+ZBOOK_LUA_PROTOCOL_DEFINE(spi, luaopen_zbook_spi);

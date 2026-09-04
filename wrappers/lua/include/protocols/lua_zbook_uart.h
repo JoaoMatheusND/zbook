@@ -1,26 +1,25 @@
 /*******************************************************************
- * @file zbook_lua.h
+ * @file lua_zbook_uart.h
  *
- * @brief Defines the Lua Wrapper Interface for the zbook library.
- * @author José Félix de Oliveira Neto (josefelix.neto@edge.ufal.br)
+ * @brief Defines the Lua Wrapper Interface for the zbook UART bus.
  * @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
  * @version 0.1
- * @date 25/08/26
+ * @date 21/08/2026
  *
  * @copyright Copyright (c) 2026
  *
  *******************************************************************/
-#ifndef ZBOOK_LUA_H
-#define ZBOOK_LUA_H
+#ifndef LUA_ZBOOK_UART_H
+#define LUA_ZBOOK_UART_H
 
 #include <lua.h>
 
 /**
- * @brief Open the `zbook` Lua library.
+ * @brief Open the `uart` Lua library.
  *
  * @param L Lua state.
  * @return 1 (the library table is on the stack).
  */
-int luaopen_zbook(lua_State *L);
+int luaopen_zbook_uart(lua_State *L);
 
-#endif /* ZBOOK_LUA_H */
+#endif /* LUA_ZBOOK_UART_H */

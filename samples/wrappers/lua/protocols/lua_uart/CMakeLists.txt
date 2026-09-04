@@ -9,11 +9,11 @@ if(NOT DEFINED BOARD)
 endif()
 
 include($ENV{ZEPHYR_BASE}/modules/lua_zephyr/luaz.cmake)
-luaz_define_source_thread(src/lua_spi.lua)
+luaz_define_source_thread(src/lua_uart.lua)
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
-project(zbook_lua_spi_sample)
+project(zbook_lua_uart_sample)
 
 file(GLOB_RECURSE ZBOOK_INTERFACE_SOURCES ${ZBOOK_ROOT}/interface/src/*.c)
 target_sources(app PRIVATE ${ZBOOK_INTERFACE_SOURCES})
