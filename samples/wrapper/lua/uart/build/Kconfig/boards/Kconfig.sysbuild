@@ -1,2 +1,0 @@
-# Load Sysbuild board Kconfig descriptions.
-osource "/home/joaomatheusnd/repo/ufal/zbook_workspace/zbook/boards/zbook/Kconfig.sysbuild"

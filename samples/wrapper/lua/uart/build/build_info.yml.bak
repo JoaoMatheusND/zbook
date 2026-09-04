@@ -1,5 +1,0 @@
-west:
-  command: /home/joaomatheusnd/zephyrproject/.venv/bin/west build -b zbook/rp2350b/m33
-    -p always hello_world/
-  topdir: /home/joaomatheusnd/repo/ufal/zbook_workspace
-  version: 1.4.0

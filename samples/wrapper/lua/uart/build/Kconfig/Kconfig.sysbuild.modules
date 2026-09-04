@@ -1,9 +1,0 @@
-config ZEPHYR_LUA_MODULE
-   bool
-   default y
-config ZEPHYR_CMSIS_6_MODULE
-   bool
-   default y
-config ZEPHYR_HAL_RPI_PICO_MODULE
-   bool
-   default y
