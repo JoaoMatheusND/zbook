@@ -1,0 +1,12 @@
+sample:
+  name: ZBook Lua SPI
+tests:
+  sample.zbook.lua_spi:
+    build_only: true
+    platform_allow: zbook/rp2350b/m33
+    integration_platforms:
+      - zbook/rp2350b/m33
+    tags:
+      - zbook
+      - lua
+      - spi

@@ -200,6 +200,14 @@
 	cs-gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
 
 	status = "okay";
+
+	zbook_spi: zbook_spi@0 {
+		compatible = "vnd,spi-device";
+
+		reg = <0>;
+		spi-max-frequency = <4000000>;
+		label = "ZBook SPI";
+	};
 };
 
 &flash0 {

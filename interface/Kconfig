@@ -1,0 +1,13 @@
+config ZBOOK_WRAPPER_LUA
+	bool "Prepare ZBook interface for the Lua wrapper"
+	help
+	  Master switch: turns on, by default, the ZBook interface protocol
+	  modules that have a Lua binding (SPI, UART, I2C, ...).
+
+config ZBOOK_SPI
+	bool "ZBook SPI protocol interface"
+	select SPI
+	default y if ZBOOK_WRAPPER_LUA
+	help
+	  Enable zbook_spi_init/write/read, a pure-C passthrough over the
+	  Zephyr SPI driver bound to the zbook_spi devicetree node.
