@@ -11,3 +11,11 @@ config ZBOOK_SPI
 	help
 	  Enable zbook_spi_init/write/read, a pure-C passthrough over the
 	  Zephyr SPI driver bound to the zbook_spi devicetree node.
+
+config ZBOOK_UART
+	bool "ZBook UART protocol interface"
+	select SERIAL
+	default y if ZBOOK_WRAPPER_LUA
+	help
+	  Enable zbook_uart_init/write/read, a pure-C passthrough over the
+	  Zephyr UART driver bound to the zbook_uart devicetree node.

@@ -1,7 +1,7 @@
 /*******************************************************************
  * @file zbook_uart.h
  *
- * @brief Interface file for the Zbook UART protocol.
+ * @brief Defines the Interface for the Zbook UART protocol.
  * @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
  * @version 0.1
  * @date 21/08/2026
@@ -10,8 +10,8 @@
  *
  *******************************************************************/
 
-#ifndef _ZBOOK_UART_H
-#define _ZBOOK_UART_H
+#ifndef ZBOOK_UART_H
+#define ZBOOK_UART_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -110,4 +110,4 @@ int zbook_uart_cfg(const struct zbook_uart_cfg *cfg);
  */
 int zbook_uart_register_pin(uint32_t tx_pin, uint32_t rx_pin, uint32_t baudrate);
 
-#endif /* _ZBOOK_UART_H */
+#endif /* ZBOOK_UART_H */

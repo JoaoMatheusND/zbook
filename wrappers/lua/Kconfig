@@ -15,6 +15,7 @@ config LUA_ZBOOK_SPI
 config LUA_ZBOOK_UART
 	bool "Lua binding for zbook_uart"
 	default y
+	depends on ZBOOK_UART
 	help
 	  Expose zbook_uart_* to Lua scripts as zbook.protocols.uart.
 

@@ -1,7 +1,7 @@
 /*
  * Point zbook-uart at uart0 (console wire) so this sample's output is
  * visible in the same terminal as the shell/log, instead of uart1 which
- * is wired to the (unpopulated here) wifi shield on P20/P21.
+ * is wired to the wifi shield on P20/P21.
  */
 
 / {

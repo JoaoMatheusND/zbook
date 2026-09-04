@@ -1,5 +1,5 @@
 /*******************************************************************
- * @file zbook_lua_protocol.h
+ * @file lua_zbook_protocol.h
  *
  * @brief Self-registration mechanism for zbook.protocols.* Lua bindings.
  *
@@ -15,8 +15,8 @@
  * @copyright Copyright (c) 2026
  *
  *******************************************************************/
-#ifndef ZBOOK_LUA_PROTOCOL_H
-#define ZBOOK_LUA_PROTOCOL_H
+#ifndef LUA_ZBOOK_PROTOCOL_H
+#define LUA_ZBOOK_PROTOCOL_H
 
 #include <lua.h>
 #include <zephyr/sys/iterable_sections.h>
@@ -39,4 +39,4 @@ struct zbook_lua_protocol {
 		.open = (_open),                                                                  \
 	}
 
-#endif /* ZBOOK_LUA_PROTOCOL_H */
+#endif /* LUA_ZBOOK_PROTOCOL_H */
