@@ -1,12 +1,3 @@
-/*
- * This sample exercises SPI1 (zbook_spi) directly on GPIO12/14/15. On the
- * P1 board revision (what this dtsi currently describes), the display's
- * bit-banged SPI bus (spibb0) shares those same GPIOs (clk-gpios=14,
- * mosi-gpios=15), so disable it here to avoid the two drivers fighting
- * over the same pins. This conflict is specific to P1's pin assignment —
- * on P2 the display moved to I2C, so it doesn't apply there.
- */
-
 &spibb0 {
 	status = "disabled";
 };

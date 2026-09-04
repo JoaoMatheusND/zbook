@@ -12,15 +12,13 @@
 
 #include "protocols/zbook_spi.h"
 
-#ifdef CONFIG_ZBOOK_SPI
-
-#include <errno.h>
-
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/spi.h>
 
 #define ZBOOK_SPI_NODE DT_NODELABEL(zbook_spi)
 #define ZBOOK_SPI_OP   (SPI_WORD_SET(8) | SPI_TRANSFER_MSB | SPI_OP_MODE_MASTER)
+
+static bool spi_ready = false;
 
 static struct spi_dt_spec zbook_spi_dev = SPI_DT_SPEC_GET(ZBOOK_SPI_NODE, ZBOOK_SPI_OP);
 
@@ -30,12 +28,14 @@ int zbook_spi_init(void)
 		return -ENODEV;
 	}
 
+	spi_ready = true;
+
 	return 0;
 }
 
 int zbook_spi_configure(const struct zbook_spi_cfg *cfg)
 {
-	if (!spi_is_ready_dt(&zbook_spi_dev)) {
+	if (!spi_ready) {
 		return -ENODEV;
 	}
 
@@ -76,7 +76,7 @@ int zbook_spi_configure(const struct zbook_spi_cfg *cfg)
 
 int zbook_spi_transceive(const uint8_t *tx, uint8_t *rx, size_t len)
 {
-	if (!spi_is_ready_dt(&zbook_spi_dev)) {
+	if (!spi_ready) {
 		return -ENODEV;
 	}
 
@@ -123,5 +123,3 @@ int zbook_spi_read(uint8_t *data, size_t len)
 
 	return zbook_spi_transceive(NULL, data, len);
 }
-
-#endif /* CONFIG_ZBOOK_SPI */

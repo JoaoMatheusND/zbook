@@ -14,6 +14,4 @@ file(GLOB_RECURSE ZBOOK_INTERFACE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/interface/
 target_sources(app PRIVATE ${ZBOOK_INTERFACE_SOURCES})
 target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/interface/includes)
 
-if(CONFIG_LUA)
-    add_subdirectory(wrappers/lua)
-endif()
+add_subdirectory_ifdef(CONFIG_LUA wrappers/lua)
