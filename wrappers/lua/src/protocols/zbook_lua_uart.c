@@ -1,6 +1,6 @@
 
 /*******************************************************************
- * @file lua_zbook_uart.c
+ * @file zbook_lua_uart.c
  *
  * @brief Lua binding for the zbook UART protocol interface wrappwer.
  * @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
@@ -10,43 +10,11 @@
  * @copyright Copyright (c) 2026
  *
  *******************************************************************/
-#include <lua_zbook/protocols/lua_zbook_uart.h>
-#include <protocols/zbook_uart.h>
+#include "protocols/zbook_lua_uart.h"
+#include "protocols/zbook_uart.h"
 
 #include <string.h>
 #include <lauxlib.h>
-#include <zephyr/kernel.h>
-
-/* Lua state and callback ref for uart.on_rx(). Guarded because the UART ISR
- * (via zbook_uart_isr) runs on a different context than the Lua VM; the
- * actual Lua call is deferred to a system workqueue item. */
-static lua_State *rx_L;
-static int rx_cb_ref = LUA_NOREF;
-
-static void rx_work_handler(struct k_work *work)
-{
-	ARG_UNUSED(work);
-
-	if (!rx_L || rx_cb_ref == LUA_NOREF) {
-		return;
-	}
-
-	lua_rawgeti(rx_L, LUA_REGISTRYINDEX, rx_cb_ref);
-	if (lua_pcall(rx_L, 0, 0, 0) != LUA_OK) {
-		lua_pop(rx_L, 1);
-	}
-}
-
-static K_WORK_DEFINE(rx_work, rx_work_handler);
-
-/** @brief Runs in ISR context; defers the Lua callback to the system workqueue. */
-static void uart_rx_isr(const struct device *dev, void *user_data)
-{
-	ARG_UNUSED(dev);
-	ARG_UNUSED(user_data);
-
-	k_work_submit(&rx_work);
-}
 
 /** @brief Lua function: uart.init() -> err. */
 static int l_uart_init(lua_State *L)
@@ -156,6 +124,10 @@ static int l_uart_cfg(lua_State *L)
 	lua_Integer baudrate = luaL_checkinteger(L, -1);
 	lua_pop(L, 1);
 
+	if (baudrate <= 0 || baudrate > UINT32_MAX) {
+		return luaL_error(L, "invalid baudrate %d", (int)baudrate);
+	}
+
 	struct zbook_uart_cfg cfg = {
 		.baudrate = (uint32_t)baudrate,
 		.parity = parse_parity(L, 1),
@@ -169,27 +141,39 @@ static int l_uart_cfg(lua_State *L)
 	return 1;
 }
 
-/** @brief Lua function: uart.on_rx(fn) -> err. Registers fn as the RX callback. */
-static int l_uart_on_rx(lua_State *L)
+/** @brief Lua function: uart.register_pin(tx_pin, rx_pin, baudrate) -> err. */
+static int l_uart_register_pin(lua_State *L)
 {
-	luaL_checktype(L, 1, LUA_TFUNCTION);
+	lua_Integer tx_pin = luaL_checkinteger(L, 1);
+	lua_Integer rx_pin = luaL_checkinteger(L, 2);
+	lua_Integer baudrate = luaL_checkinteger(L, 3);
 
-	if (rx_cb_ref != LUA_NOREF) {
-		luaL_unref(L, LUA_REGISTRYINDEX, rx_cb_ref);
+	if (tx_pin < 0 || tx_pin >= ZBOOK_UART_PIO_GPIO_COUNT) {
+		return luaL_error(L, "invalid tx_pin %d (expected 0..%d)", (int)tx_pin,
+				   ZBOOK_UART_PIO_GPIO_COUNT - 1);
 	}
 
-	rx_L = L;
-	rx_cb_ref = luaL_ref(L, LUA_REGISTRYINDEX);
+	if (rx_pin < 0 || rx_pin >= ZBOOK_UART_PIO_GPIO_COUNT) {
+		return luaL_error(L, "invalid rx_pin %d (expected 0..%d)", (int)rx_pin,
+				   ZBOOK_UART_PIO_GPIO_COUNT - 1);
+	}
 
-	int err = zbook_uart_set_callback(uart_rx_isr, NULL);
+	if (baudrate <= 0 || baudrate > UINT32_MAX) {
+		return luaL_error(L, "invalid baudrate %d", (int)baudrate);
+	}
+
+	int err = zbook_uart_register_pin((uint32_t)tx_pin, (uint32_t)rx_pin, (uint32_t)baudrate);
 
 	lua_pushinteger(L, err);
 	return 1;
 }
 
 static const luaL_Reg uart_wrappers[] = {
-	{"init", l_uart_init},   {"write", l_uart_write}, {"read", l_uart_read},
-	{"cfg", l_uart_cfg},     {"on_rx", l_uart_on_rx},
+	{"init", l_uart_init},
+	{"write", l_uart_write},
+	{"read", l_uart_read},
+	{"cfg", l_uart_cfg},
+	{"register_pin", l_uart_register_pin},
 	{NULL, NULL},
 };
 

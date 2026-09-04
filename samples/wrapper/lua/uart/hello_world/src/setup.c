@@ -11,7 +11,7 @@
  *******************************************************************/
 #include <lauxlib.h>
 #include <lua.h>
-#include <lua_zbook/lua_zbook.h>
+#include <zbook_lua.h>
 
 /** @brief Weak hook run before uart_sample.lua: registers zbook.* in package.preload. */
 int uart_sample_lua_setup(lua_State *L)

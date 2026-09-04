@@ -18,6 +18,9 @@
 
 #include <zephyr/drivers/uart.h>
 
+/** @brief Number of GPIOs available for zbook_uart_register_pin() (RP2350B: GPIO0..GPIO47). */
+#define ZBOOK_UART_PIO_GPIO_COUNT 48
+
 /**
  * @brief Parity mode for the zbook UART peripheral.
  */
@@ -53,15 +56,6 @@ struct zbook_uart_cfg {
 	enum zbook_uart_stop_bits stop_bits; /**< Stop bits for the UART */
 	enum zbook_uart_data_bits data_bits; /**< Data bits for the UART */
 };
-
-/**
- * @brief Callback signature invoked when the zbook UART peripheral has
- * data available to read. Called from ISR context.
- *
- * @param dev UART device that triggered the callback.
- * @param user_data User data passed at registration.
- */
-typedef void (*zbook_uart_cb_t)(const struct device *dev, void *user_data);
 
 /**
  * @brief Initializes the zbook UART peripheral.
@@ -100,14 +94,20 @@ int zbook_uart_read(uint8_t *data, size_t len);
 int zbook_uart_cfg(const struct zbook_uart_cfg *cfg);
 
 /**
- * @brief Registers a callback for RX-ready events on the zbook UART
- * peripheral and enables RX interrupts.
+ * @brief Registers a pair of GPIO pins as a UART peripheral, bit-banged
+ * over PIO instead of a hardware UART.
  *
- * @param cb Callback invoked from ISR context when RX data is ready.
- * @param user_data Opaque pointer passed back to the callback.
+ * Claims one PIO block (pio0) and two of its state machines to run a
+ * software UART: one drives @p tx_pin as TX, the other watches @p rx_pin
+ * as RX. Once registered, zbook_uart_write() and zbook_uart_read() operate
+ * over this PIO UART instead of the devicetree-selected hardware UART.
+ *
+ * @param tx_pin GPIO pin number to use as UART TX.
+ * @param rx_pin GPIO pin number to use as UART RX.
+ * @param baudrate Baudrate for the PIO UART.
  *
  * @return 0 on success, -errno on error.
  */
-int zbook_uart_set_callback(zbook_uart_cb_t cb, void *user_data);
+int zbook_uart_register_pin(uint32_t tx_pin, uint32_t rx_pin, uint32_t baudrate);
 
 #endif /* _ZBOOK_UART_H */

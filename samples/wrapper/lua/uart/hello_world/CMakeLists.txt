@@ -27,7 +27,7 @@ target_compile_definitions(app PRIVATE CONFIG_ZBOOK_LUA_UART=1)
 target_sources(app PRIVATE
 	${ZBOOK_ROOT}/interface/src/protocols/zbook_uart.c
 	${ZBOOK_ROOT}/wrappers/lua/src/lua_zbook.c
-	${ZBOOK_ROOT}/wrappers/lua/src/protocols/lua_zbook_uart.c
+	${ZBOOK_ROOT}/wrappers/lua/src/protocols/zbook_lua_uart.c
 	src/setup.c
 )
 

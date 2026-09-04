@@ -11,10 +11,10 @@
  *******************************************************************/
 
 #include <lauxlib.h>
-#include <lua_zbook/lua_zbook.h>
+#include <zbook_lua.h>
 
 #if defined(CONFIG_ZBOOK_LUA_UART)
-#include <lua_zbook/protocols/lua_zbook_uart.h>
+#include <protocols/zbook_lua_uart.h>
 
 static void push_category_protocols(lua_State *L)
 {

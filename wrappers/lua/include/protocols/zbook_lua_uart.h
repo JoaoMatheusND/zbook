@@ -1,5 +1,5 @@
  /*******************************************************************
- * @file lua_zbook_uart.h
+ * @file zbook_lua_uart.h
  *
  * @brief Lua binding for the zbook UART protocol interface.
  * @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
@@ -10,9 +10,9 @@
  *
  *******************************************************************/
 
-#ifndef _LUA_ZBOOK_UART_H
-#define _LUA_ZBOOK_UART_H
-
+#ifndef _ZBOOK_LUA_UART_H
+#define _ZBOOK_LUA_UART_H
+ 
 #include <lua.h>
 
 /**
@@ -23,4 +23,4 @@
  */
 int luaopen_zbook_uart(lua_State *L);
 
-#endif /* _LUA_ZBOOK_UART_H */
+#endif /* _ZBOOK_LUA_UART_H */

@@ -7,5 +7,5 @@ target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_sources(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/lua_zbook.c)
 
 target_sources_ifdef(CONFIG_ZBOOK_LUA_UART app PRIVATE
-	${CMAKE_CURRENT_SOURCE_DIR}/src/protocols/lua_zbook_uart.c
+	${CMAKE_CURRENT_SOURCE_DIR}/src/protocols/zbook_lua_uart.c
 )
