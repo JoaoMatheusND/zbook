@@ -11,9 +11,7 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(zbook)
 
 file(GLOB_RECURSE ZBOOK_INTERFACE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/interface/src/*.c)
-
-target_sources(app PRIVATE ${SOURCE_FILES})
-
+target_sources(app PRIVATE ${ZBOOK_INTERFACE_SOURCES})
 target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/interface/includes)
 
-add_subdirectory_ifdef(CONFIG_ZBOOK_LUA_UART wrappers/lua)
+add_subdirectory_ifdef(CONFIG_LUA wrappers/lua)

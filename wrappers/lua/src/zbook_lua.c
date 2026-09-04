@@ -12,29 +12,31 @@
 
 #include <lauxlib.h>
 #include <zbook_lua.h>
+#include <zbook_lua_protocol.h>
 
-#ifdef CONFIG_LUA_ZBOOK_SPI
-#include <protocols/lua_zbook_spi.h>
-#endif
-
-#if defined(CONFIG_LUA_ZBOOK_SPI)
 static void push_category_protocols(lua_State *L)
 {
 	lua_newtable(L);
 
-	luaopen_zbook_spi(L);
-	lua_setfield(L, -2, "spi");
+	STRUCT_SECTION_FOREACH(zbook_lua_protocol, proto)
+	{
+		proto->open(L);
+		lua_setfield(L, -2, proto->name);
+	}
 }
-#endif
 
 int luaopen_zbook(lua_State *L)
 {
 	lua_newtable(L);
 
-#if defined(CONFIG_LUA_ZBOOK_SPI)
-	push_category_protocols(L);
-	lua_setfield(L, -2, "protocols");
-#endif
+	size_t protocol_count;
+
+	STRUCT_SECTION_COUNT(zbook_lua_protocol, &protocol_count);
+
+	if (protocol_count > 0) {
+		push_category_protocols(L);
+		lua_setfield(L, -2, "protocols");
+	}
 
 	return 1;
 }

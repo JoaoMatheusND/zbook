@@ -1,0 +1,13 @@
+sample:
+  name: ZBook Lua UART (PIO pin registration)
+tests:
+  sample.zbook.lua_uart_pio:
+    build_only: true
+    platform_allow: zbook/rp2350b/m33
+    integration_platforms:
+      - zbook/rp2350b/m33
+    tags:
+      - zbook
+      - lua
+      - uart
+      - pio

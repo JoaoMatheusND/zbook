@@ -1,11 +1,14 @@
-file(GLOB_RECURSE ZBOOK_LUA_WRAPPER_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
-
-target_sources(app PRIVATE ${ZBOOK_LUA_WRAPPER_SOURCES})
+target_sources(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/zbook_lua.c)
 target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+# Gathers ZBOOK_LUA_PROTOCOL_DEFINE() entries into one contiguous,
+# STRUCT_SECTION_FOREACH()-iterable region (see include/zbook_lua_protocol.h).
+zephyr_linker_sources(DATA_SECTIONS ${CMAKE_CURRENT_SOURCE_DIR}/zbook_lua_protocol.ld)
 
-target_sources(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/lua_zbook.c)
+target_sources_ifdef(CONFIG_LUA_ZBOOK_UART app PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/src/protocols/lua_zbook_uart.c
+)
 
-target_sources_ifdef(CONFIG_ZBOOK_LUA_UART app PRIVATE
-	${CMAKE_CURRENT_SOURCE_DIR}/src/protocols/zbook_lua_uart.c
+target_sources_ifdef(CONFIG_LUA_ZBOOK_SPI app PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/src/protocols/lua_zbook_spi.c
 )

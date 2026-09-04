@@ -1,8 +1,7 @@
-
 /*******************************************************************
- * @file zbook_lua_uart.c
+ * @file lua_zbook_uart.c
  *
- * @brief Lua binding for the zbook UART protocol interface wrappwer.
+ * @brief Implements the Lua Wrapper Interface for the zbook UART bus.
  * @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
  * @version 0.1
  * @date 21/08/2026
@@ -10,22 +9,35 @@
  * @copyright Copyright (c) 2026
  *
  *******************************************************************/
-#include "protocols/zbook_lua_uart.h"
-#include "protocols/zbook_uart.h"
+
+#include "protocols/lua_zbook_uart.h"
+
+#include <lauxlib.h>
+#include <protocols/zbook_uart.h>
+#include <zbook_lua_protocol.h>
 
 #include <string.h>
-#include <lauxlib.h>
 
-/** @brief Lua function: uart.init() -> err. */
+/**
+ * @brief Lua function: uart.init().
+ *
+ * @return 0 on success, -errno on error.
+ */
 static int l_uart_init(lua_State *L)
 {
 	int err = zbook_uart_init();
 
 	lua_pushinteger(L, err);
+
 	return 1;
 }
 
-/** @brief Lua function: uart.write(data) -> err. */
+/**
+ * @brief Lua function: uart.write(data).
+ *
+ * @param data String containing the bytes to send.
+ * @return 0 on success, -errno on error.
+ */
 static int l_uart_write(lua_State *L)
 {
 	size_t len;
@@ -34,10 +46,16 @@ static int l_uart_write(lua_State *L)
 	int err = zbook_uart_write((const uint8_t *)data, len);
 
 	lua_pushinteger(L, err);
+
 	return 1;
 }
 
-/** @brief Lua function: uart.read(len) -> err, data. */
+/**
+ * @brief Lua function: uart.read(len).
+ *
+ * @param len Number of bytes to read.
+ * @return err, data. On error, data is nil.
+ */
 static int l_uart_read(lua_State *L)
 {
 	lua_Integer len = luaL_checkinteger(L, 1);
@@ -50,11 +68,13 @@ static int l_uart_read(lua_State *L)
 	int err = zbook_uart_read(buf, (size_t)len);
 
 	lua_pushinteger(L, err);
+
 	if (err) {
 		lua_pushnil(L);
 	} else {
 		lua_pushlstring(L, (const char *)buf, (size_t)len);
 	}
+
 	return 2;
 }
 
@@ -74,6 +94,7 @@ static enum zbook_uart_parity parse_parity(lua_State *L, int idx)
 	}
 
 	lua_pop(L, 1);
+
 	return result;
 }
 
@@ -115,7 +136,16 @@ static enum zbook_uart_data_bits parse_data_bits(lua_State *L, int idx)
 	}
 }
 
-/** @brief Lua function: uart.cfg({baudrate=.., parity=.., stop_bits=.., data_bits=..}) -> err. */
+/**
+ * @brief Lua function: uart.cfg(cfg).
+ *
+ * @param cfg Table with the following fields:
+ *   - baudrate: Baud rate in bps.
+ *   - parity: "none", "odd" or "even" (default "none").
+ *   - stop_bits: 1 or 2 (default 1).
+ *   - data_bits: 7, 8 or 9 (default 8).
+ * @return 0 on success, -errno on error.
+ */
 static int l_uart_cfg(lua_State *L)
 {
 	luaL_checktype(L, 1, LUA_TTABLE);
@@ -138,10 +168,18 @@ static int l_uart_cfg(lua_State *L)
 	int err = zbook_uart_cfg(&cfg);
 
 	lua_pushinteger(L, err);
+
 	return 1;
 }
 
-/** @brief Lua function: uart.register_pin(tx_pin, rx_pin, baudrate) -> err. */
+/**
+ * @brief Lua function: uart.register_pin(tx_pin, rx_pin, baudrate).
+ *
+ * @param tx_pin PIO GPIO index used for TX.
+ * @param rx_pin PIO GPIO index used for RX.
+ * @param baudrate Baud rate in bps.
+ * @return 0 on success, -errno on error.
+ */
 static int l_uart_register_pin(lua_State *L)
 {
 	lua_Integer tx_pin = luaL_checkinteger(L, 1);
@@ -165,6 +203,7 @@ static int l_uart_register_pin(lua_State *L)
 	int err = zbook_uart_register_pin((uint32_t)tx_pin, (uint32_t)rx_pin, (uint32_t)baudrate);
 
 	lua_pushinteger(L, err);
+
 	return 1;
 }
 
@@ -180,5 +219,8 @@ static const luaL_Reg uart_wrappers[] = {
 int luaopen_zbook_uart(lua_State *L)
 {
 	luaL_newlib(L, uart_wrappers);
+
 	return 1;
 }
+
+ZBOOK_LUA_PROTOCOL_DEFINE(uart, luaopen_zbook_uart);

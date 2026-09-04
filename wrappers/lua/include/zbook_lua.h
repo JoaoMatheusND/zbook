@@ -3,6 +3,7 @@
  *
  * @brief Defines the Lua Wrapper Interface for the zbook library.
  * @author José Félix de Oliveira Neto (josefelix.neto@edge.ufal.br)
+ * @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
  * @version 0.1
  * @date 25/08/26
  *
